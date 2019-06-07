@@ -34,8 +34,6 @@ Assembly-CSharp.csproj
 *.pidb.meta
 *.vscode/
 *.code-workspace
-SimResults.txt
-ValidDecks.txt
 /Assets/Plugins.meta
 /Assets/StreamingAssets.meta
  
