@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using UnityEngine;
+using System.Security.Cryptography;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public class Serializer {
@@ -24,5 +25,31 @@ public class Serializer {
 			BinaryFormatter formatter = new BinaryFormatter();
 			formatter.Serialize(stream, data);
 		}
+	}
+
+	public static string CalculateMD5(string filename) {
+		using(MD5 md5 = MD5.Create()) {
+			using(FileStream stream = File.OpenRead(filename)) {
+				byte[] hash = md5.ComputeHash(stream);
+				return BitConverter.ToString(hash).Replace("-", "").ToLowerInvariant();
+			}
+		}
+	}
+}
+
+// ------------------------------------------------------------------------- //
+// Custom serialization types
+[Serializable]
+public struct Vector2Ser {
+	public float x;
+	public float y;
+
+	public Vector2Ser(Vector2 value) {
+		x = value.x;
+		y = value.y;
+	}
+
+	public Vector2 Value {
+		get { return new Vector2(x, y); }
 	}
 }
